@@ -96,9 +96,8 @@ class TestUserDelete(BaseCase):
         cookies = response3.cookies["auth_sid"]
         token2 = response3.headers["x-csrf-token"]
 
-        # TRY to delete user#1 by user#2
-        response4 = requests.delete(f"https://playground.learnqa.ru/api/user/{user_id1}",
-                                    cookies={"auth_sid": auth_sid2},
-                                    headers={"x-csrf-token": token2})
+        response4 = MyRequests.delete(f"/user/{user_id1}",
+                                      cookies={"auth_sid": auth_sid2},
+                                      headers={"x-csrf-token": token2})
         Assertions.assert_code_status(response4, 400)
         Assertions.assert_response_text(response4, '{"error":"This user can only delete their own account."}')
