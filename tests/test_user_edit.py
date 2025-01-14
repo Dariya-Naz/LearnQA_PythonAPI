@@ -101,10 +101,10 @@ class TestUserEdit(BaseCase):
 
         # TRY to edit user#1 by user#2
         new_name = "Changed name"
-        response4 = requests.put(f"https://playground.learnqa.ru/api/user/{user_id1}",
-                                 cookies={"auth_sid": auth_sid2},
-                                 headers={"x-csrf-token": token2},
-                                 data={"firstName": new_name})
+        response4 = MyRequests.put(f"/user/{user_id1}",
+                                   cookies={"auth_sid": auth_sid2},
+                                   headers={"x-csrf-token": token2},
+                                   data={"firstName": new_name})
 
         Assertions.assert_code_status(response4, 400)
         Assertions.assert_response_text(response4, '{"error":"This user can only edit their own data."}')
